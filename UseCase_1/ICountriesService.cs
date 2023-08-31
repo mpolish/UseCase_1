@@ -2,5 +2,5 @@
 
 public interface ICountriesService
 {
-    public Task<List<Country>> GetCountries(string countryName, string param2, int param3);
+    public Task<List<Country>> GetCountries(string countryName, string param2, int population);
 }

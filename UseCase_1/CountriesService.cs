@@ -14,7 +14,7 @@ public class CountriesService : ICountriesService
         _httpClient = httpClientFactory.CreateClient(options!.ApiName);
     }
 
-    public async Task<List<Country>> GetCountries(string countryName, string param2, int param3)
+    public async Task<List<Country>> GetCountries(string countryName, string param2, int population)
     {
         try
         {
@@ -22,9 +22,11 @@ public class CountriesService : ICountriesService
 
             if (response.IsSuccessStatusCode)
             {
-                var countries = JsonSerializer.Deserialize<List<Country>>(await response.Content.ReadAsStringAsync());
+                var countries = await response.Content.ReadFromJsonAsync<List<Country>>();
 
-                return countries?.Filter(countryName) ?? Enumerable.Empty<Country>().ToList();
+                return countries?
+                    .FilterByCountry(countryName)
+                    .FilterByPopulation(population) ?? Enumerable.Empty<Country>().ToList();
             }
 
             return Enumerable.Empty<Country>().ToList();;
