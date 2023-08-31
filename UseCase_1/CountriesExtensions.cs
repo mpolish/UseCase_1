@@ -2,7 +2,7 @@
 
 public static class CountriesExtensions
 {
-    public static List<Country> FilterByCountry(this List<Country> source, string filter)
+    public static List<Country> FilterByName(this List<Country> source, string filter)
     {
         if (string.IsNullOrWhiteSpace(filter))
         {
@@ -25,7 +25,7 @@ public static class CountriesExtensions
             .ToList();;
     }
 
-    public static List<Country> OrderCountriesBy(this List<Country> source, string direction)
+    public static List<Country> OrderByDirection(this List<Country> source, string direction)
     {
         if (string.IsNullOrWhiteSpace(direction))
         {

@@ -18,22 +18,23 @@ public sealed class CountriesController : ControllerBase
     /// <summary>
     ///     Retrieve countries.
     /// </summary>
-    /// <param name="param1">Param 1</param>
-    /// <param name="param2">Param 2</param>
-    /// <param name="param3">Param 3</param>
-    /// <param name="param4">Param 4</param>
+    /// <param name="population">Population filter</param>
+    /// <param name="countriesCount">Countries count</param>
+    /// <param name="countryName">Country name filter</param>
+    /// <param name="sortingDirection">Sorting direction</param>
     /// <returns>
-    ///     Returns countries list
+    ///     Returns filtered, sorted and paged countries list
     /// </returns>
     [HttpGet]
     [ProducesResponseType(StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetCountries(
-        [FromQuery] int param1,
-        [FromQuery] int param2,
-        [FromQuery] string param3 = "",
-        [FromQuery] string param4 = "")
+        [FromQuery] int population,
+        [FromQuery] int countriesCount,
+        [FromQuery] string countryName = "",
+        [FromQuery] string sortingDirection = "")
     {
-        var response = await _countriesService.GetCountries(param3, param4, param1, param2);
+        var response = await _countriesService.GetCountries(countryName, sortingDirection, population, countriesCount);
 
         if (response.Any())
         {
