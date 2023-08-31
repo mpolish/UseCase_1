@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using UseCase_1.Services;
 
 namespace UseCase_1.Controllers;
 
@@ -36,7 +37,7 @@ public sealed class CountriesController : ControllerBase
     {
         var response = await _countriesService.GetCountries(countryName, sortingDirection, population, countriesCount);
 
-        if (response.Any())
+        if (response.Data.Any())
         {
             return Ok(response);
         }

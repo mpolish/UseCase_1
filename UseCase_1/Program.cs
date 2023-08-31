@@ -1,5 +1,6 @@
 using UseCase_1;
 using UseCase_1.Options;
+using UseCase_1.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
@@ -18,7 +19,7 @@ builder.Services.AddHttpClient(apiOptions!.ApiName)
         httpClient.BaseAddress = new Uri(apiOptions.BaseUrl);
     });
 
-builder.Services.AddScoped<ICountriesService, CountriesService>();
+builder.Services.AddScoped<ICountriesService, CountryService>();
 
 var app = builder.Build();
 

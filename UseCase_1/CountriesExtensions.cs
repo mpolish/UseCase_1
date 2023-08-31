@@ -1,4 +1,6 @@
-﻿namespace UseCase_1;
+﻿using UseCase_1.Models;
+
+namespace UseCase_1;
 
 public static class CountriesExtensions
 {
