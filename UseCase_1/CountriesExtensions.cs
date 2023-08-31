@@ -25,4 +25,25 @@ public static class CountriesExtensions
 
         return source;
     }
+
+    public static List<Country> OrderCountriesBy(this List<Country> source, string direction)
+    {
+        if (!string.IsNullOrWhiteSpace(direction))
+        {
+            switch (direction.ToLower())
+            {
+                case "ascend" :
+                    return source
+                        .OrderBy(x => x.Name.Common)
+                        .ToList();
+
+                case "descend" :
+                    return source
+                        .OrderByDescending(x => x.Name.Common)
+                        .ToList();
+            }
+        }
+
+        return source;
+    }
 }
