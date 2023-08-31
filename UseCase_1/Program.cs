@@ -1,3 +1,4 @@
+using UseCase_1;
 using UseCase_1.Options;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,6 +17,8 @@ builder.Services.AddHttpClient(apiOptions!.ApiName)
     {
         httpClient.BaseAddress = new Uri(apiOptions.BaseUrl);
     });
+
+builder.Services.AddScoped<ICountriesService, CountriesService>();
 
 var app = builder.Build();
 

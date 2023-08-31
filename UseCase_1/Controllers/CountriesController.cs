@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Options;
-using UseCase_1.Options;
 
 namespace UseCase_1.Controllers;
 
@@ -11,13 +9,10 @@ namespace UseCase_1.Controllers;
 [Route("[controller]")]
 public sealed class CountriesController : ControllerBase
 {
-    private readonly HttpClient _httpClient;
-    private readonly CountriesOptions _countriesOptions;
-
-    public CountriesController(IOptions<CountriesOptions> countriesOptions, IHttpClientFactory httpClientFactory)
+    private readonly ICountriesService _countriesService;
+    public CountriesController(ICountriesService countriesService)
     {
-        _countriesOptions = countriesOptions.Value;
-        _httpClient = httpClientFactory.CreateClient(_countriesOptions!.ApiName);
+        _countriesService = countriesService;
     }
 
     /// <summary>
@@ -36,21 +31,13 @@ public sealed class CountriesController : ControllerBase
         [FromQuery] string param2 = "",
         [FromQuery] string param3 = "")
     {
-        try
-        {
-            var response = await _httpClient.GetAsync("all");
-            if (response.IsSuccessStatusCode)
-            {
-                var data = await response.Content.ReadAsStringAsync();
-                return Ok(data);
-            }
+        var response = await _countriesService.GetCountries(param2, param3, param1);
 
-            return BadRequest();
-        }
-        catch (Exception e)
+        if (response.Any())
         {
-            Console.WriteLine(e.Message);
-            throw;
+            return Ok(response);
         }
+
+        return BadRequest();
     }
 }
