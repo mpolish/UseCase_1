@@ -14,7 +14,7 @@ public class CountriesService : ICountriesService
         _httpClient = httpClientFactory.CreateClient(options!.ApiName);
     }
 
-    public async Task<List<Country>> GetCountries(string countryName, string sortingDirection, int population)
+    public async Task<List<Country>> GetCountries(string countryName, string sortingDirection, int population, int countriesCount)
     {
         try
         {
@@ -27,7 +27,8 @@ public class CountriesService : ICountriesService
                 return countries?
                     .FilterByCountry(countryName)
                     .FilterByPopulation(population)
-                    .OrderCountriesBy(sortingDirection) ?? Enumerable.Empty<Country>().ToList();
+                    .OrderCountriesBy(sortingDirection)
+                    .TakeCount(countriesCount) ?? Enumerable.Empty<Country>().ToList();
             }
 
             return Enumerable.Empty<Country>().ToList();;

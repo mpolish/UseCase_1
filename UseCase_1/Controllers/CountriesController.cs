@@ -21,6 +21,7 @@ public sealed class CountriesController : ControllerBase
     /// <param name="param1">Param 1</param>
     /// <param name="param2">Param 2</param>
     /// <param name="param3">Param 3</param>
+    /// <param name="param4">Param 4</param>
     /// <returns>
     ///     Returns countries list
     /// </returns>
@@ -28,10 +29,11 @@ public sealed class CountriesController : ControllerBase
     [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> GetCountries(
         [FromQuery] int param1,
-        [FromQuery] string param2 = "",
-        [FromQuery] string param3 = "")
+        [FromQuery] int param2,
+        [FromQuery] string param3 = "",
+        [FromQuery] string param4 = "")
     {
-        var response = await _countriesService.GetCountries(param2, param3, param1);
+        var response = await _countriesService.GetCountries(param3, param4, param1, param2);
 
         if (response.Any())
         {
